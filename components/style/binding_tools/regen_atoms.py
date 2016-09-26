@@ -139,7 +139,7 @@ def write_atom_macro(atoms, file_name):
         f.write("#[macro_export]\n")
         f.write("macro_rules! atom {\n")
         f.writelines(['("%s") => { $crate::string_cache::atom_macro::unsafe_atom_from_static(\
-                      $crate::string_cache::atom_macro::%s as *mut _) };\n'
+                      unsafe { $crate::string_cache::atom_macro::%s as *mut _ }) };\n'
                      % (atom.value, atom.ident) for atom in atoms])
         f.write("}\n")
 
